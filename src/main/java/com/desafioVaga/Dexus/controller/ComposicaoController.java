@@ -19,12 +19,6 @@ public class ComposicaoController {
     @Autowired
     private ComposicaoRepository repository;
 
-    @Transactional
-    @PostMapping
-    public ResponseEntity<ComposicaoTime> createComposicaoTime(@RequestBody ComposicaoTime composicaoTime) {
-        ComposicaoTime createdComposicao = repository.save(composicaoTime);
-        return new ResponseEntity<>(createdComposicao, HttpStatus.CREATED);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ComposicaoTimeDto> listar(@PathVariable Long id) {

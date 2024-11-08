@@ -1,5 +1,6 @@
 package com.desafioVaga.Dexus.model;
 
+import com.desafioVaga.Dexus.dtos.FiltrarIntrgrante;
 import com.desafioVaga.Dexus.dtos.IntegranteDTO;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,11 @@ public class Integrante {
     public Integrante(IntegranteDTO dados) {
         this.franquia = dados.franquia();
         this.nome = dados.nome();
+        this.funcao = dados.funcao();
+    }
+
+    public Integrante(FiltrarIntrgrante dados) {
+
         this.funcao = dados.funcao();
     }
 
