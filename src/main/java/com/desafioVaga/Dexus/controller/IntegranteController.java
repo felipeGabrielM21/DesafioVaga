@@ -7,14 +7,10 @@ import com.desafioVaga.Dexus.repository.IntegranteRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.Map;
 import java.util.LinkedHashMap;
-
-
-import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -49,17 +45,16 @@ public class IntegranteController {
     @GetMapping("/funcaoComum")
     public ResponseEntity<FiltrarIntrgrante> funcaoMaisComum(@RequestParam(required = false) String dataInicio,
                                                              @RequestParam(required = false) String dataFim) {
-        // Aqui você pode fazer o filtro pela data, se for o caso, mas vou simplificar para o cenário atual.
         var integrantes = repository.findAll();  // Recupera todos os integrantes do banco
         if (integrantes.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        // Lógica para contar qual função é a mais comum
+
         Map<String, Long> funcaoCount = integrantes.stream()
                 .collect(Collectors.groupingBy(Integrante::getFuncao, Collectors.counting()));
 
-        // Encontre a função mais comum (aquela com maior contagem)
+
         String funcaoMaisComum = funcaoCount.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
@@ -72,17 +67,17 @@ public class IntegranteController {
     @GetMapping("/contagemPorFranquia")
     public ResponseEntity<Map<String, Long>> contagemPorFranquia(@RequestParam(required = false) String dataInicio,
                                                                  @RequestParam(required = false) String dataFim) {
-        // Recupera todos os integrantes do banco de dados
+
         var integrantes = repository.findAll();
         if (integrantes.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        // Lógica para contar quantos integrantes existem por franquia
+
         Map<String, Long> franquiaCount = integrantes.stream()
                 .collect(Collectors.groupingBy(Integrante::getFranquia, Collectors.counting()));
 
-        // Ordenar as franquias por contagem e pegar as 3 mais frequentes
+
         Map<String, Long> topFranquias = franquiaCount.entrySet().stream()
                 .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
                 .limit(3)  // Pega as 3 mais frequentes

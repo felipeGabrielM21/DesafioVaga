@@ -2,15 +2,13 @@ package com.desafioVaga.Dexus.controller;
 
 
 import com.desafioVaga.Dexus.dtos.ComposicaoTimeDto;
-import com.desafioVaga.Dexus.model.ComposicaoTime;
 import com.desafioVaga.Dexus.repository.ComposicaoRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/composicao-time")
 public class ComposicaoController {
