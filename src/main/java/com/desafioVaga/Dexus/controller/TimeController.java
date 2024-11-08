@@ -15,30 +15,28 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class TimeController {
 
     @Autowired
-    private  TimeRepository repository;
-
+    private TimeRepository repository;
 
 
     @Transactional
     @PostMapping
     public ResponseEntity<Time> cadastrar(@Valid @RequestBody TimeDto dados, UriComponentsBuilder builder) {
-        // Cria um novo objeto Time a partir do DTO
         Time novoTime = new Time(dados);
 
-        // Salva o novo time no banco de dados
         novoTime = repository.save(novoTime);
 
-        // Cria a URI do novo recurso criado
         var uri = builder.path("/time/{id}").buildAndExpand(novoTime.getId()).toUri();
 
-        // Retorna a resposta com status 201 Created e a URI do novo time
         return ResponseEntity.created(uri).body(novoTime);
     }
 
 
-    @GetMapping("/time")
-    public String getTime() {
-        return "Current time: " + java.time.LocalDateTime.now();
+    @GetMapping("/{id}")
+    public ResponseEntity<TimeDto> listar(@PathVariable Long id) {
+        var listarTime = repository.findById(id);
+        if (listarTime.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new TimeDto(listarTime.get().getData(), listarTime.get().getComposicaoTime()));
     }
-
 }

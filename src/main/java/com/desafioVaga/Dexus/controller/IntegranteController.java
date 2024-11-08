@@ -1,5 +1,6 @@
 package com.desafioVaga.Dexus.controller;
 
+import com.desafioVaga.Dexus.dtos.IntegranteDTO;
 import com.desafioVaga.Dexus.model.Integrante;
 import com.desafioVaga.Dexus.repository.IntegranteRepository;
 import jakarta.validation.Valid;
@@ -23,10 +24,18 @@ public class IntegranteController {
     public ResponseEntity<Integrante> cadastrar(@Valid @RequestBody Integrante integrante, UriComponentsBuilder builder) {
         Integrante novoIntegrante = repository.save(integrante);
 
-        // Cria a URI para o novo recurso criado
         var uri = builder.path("/integrantes/{id}").buildAndExpand(novoIntegrante.getId()).toUri();
 
-        // Retorna a resposta com status CREATED e a URI do novo integrante
         return ResponseEntity.created(uri).body(novoIntegrante);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<IntegranteDTO> listar(@PathVariable Long id) {
+        var listarIntegrante = repository.findById(id);
+        if (listarIntegrante.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new IntegranteDTO(listarIntegrante.get().getFranquia(), listarIntegrante.get().getNome(), listarIntegrante.get().getFuncao()));
+    }
+
 }
