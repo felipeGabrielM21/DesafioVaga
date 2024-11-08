@@ -1,42 +1,25 @@
 package com.desafioVaga.Dexus.model;
 
+import com.desafioVaga.Dexus.dtos.IntegranteDTO;
 import jakarta.persistence.*;
-import org.jetbrains.annotations.NotNull;
-import java.util.List;
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "integrante")
+@EqualsAndHashCode(of = "id")
 public class Integrante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @NotNull
-    @Column
     private String franquia;
-
-    @NotNull
-    @Column
     private String nome;
-
-    @NotNull
-    @Column
     private String funcao;
 
-    @OneToMany(mappedBy = "integrante")
-    private List<ComposicaoTime> composicaoTime;
-
-
-    public Integrante() {
-    }
-
-    public Integrante(String franquia, String nome, String funcao, List<ComposicaoTime> composicaoTime) {
-        this.franquia = franquia;
-        this.nome = nome;
-        this.funcao = funcao;
-        this.composicaoTime = composicaoTime;
+    public Integrante(IntegranteDTO dados) {
+        this.franquia = dados.franquia();
+        this.nome = dados.nome();
+        this.funcao = dados.funcao();
     }
 
     public long getId() {
@@ -69,37 +52,5 @@ public class Integrante {
 
     public void setFuncao(String funcao) {
         this.funcao = funcao;
-    }
-
-    public List<ComposicaoTime> getComposicaoTime() {
-        return composicaoTime;
-    }
-
-    public void setComposicaoTime(List<ComposicaoTime> composicaoTime) {
-        this.composicaoTime = composicaoTime;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Integrante)) return false;
-        Integrante that = (Integrante) o;
-        return id == that.id && Objects.equals(franquia, that.franquia) && Objects.equals(nome, that.nome) && Objects.equals(funcao, that.funcao);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, franquia, nome, funcao);
-    }
-
-    @Override
-    public String toString() {
-        return "Integrante{" +
-                "id=" + id +
-                ", franquia='" + franquia + '\'' +
-                ", nome='" + nome + '\'' +
-                ", funcao='" + funcao + '\'' +
-                '}';
     }
 }
