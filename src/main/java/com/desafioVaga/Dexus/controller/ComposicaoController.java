@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class ComposicaoController {
 
 
+    @Autowired
     private ComposicaoRepository composicaoTimeService;
 
     // Criar uma nova composição de time

@@ -1,6 +1,7 @@
 package com.desafioVaga.Dexus.model;
 
 
+import com.desafioVaga.Dexus.dtos.TimeDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -24,9 +25,9 @@ public class Time {
     public Time() {
     }
 
-    public Time(LocalDate data, List<ComposicaoTime> composicaoTime) {
-        this.data = data;
-        this.composicaoTime = composicaoTime;
+    public Time(TimeDto dados) {
+        this.data = dados.data();
+        this.composicaoTime = dados.composicaoTime();
     }
 
     public long getId() {

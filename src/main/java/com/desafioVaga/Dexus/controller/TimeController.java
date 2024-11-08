@@ -1,5 +1,6 @@
 package com.desafioVaga.Dexus.controller;
 
+import com.desafioVaga.Dexus.dtos.TimeDto;
 import com.desafioVaga.Dexus.model.Time;
 import com.desafioVaga.Dexus.repository.TimeRepository;
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/time")
 public class TimeController {
 
+    @Autowired
     private  TimeRepository repository;
 
 
@@ -34,8 +36,9 @@ public class TimeController {
     }
 
 
-    @GetMapping
-    public ResponseEntity<String> testar() {
-        return ResponseEntity.ok("Funcionando");
+    @GetMapping("/time")
+    public String getTime() {
+        return "Current time: " + java.time.LocalDateTime.now();
     }
+
 }

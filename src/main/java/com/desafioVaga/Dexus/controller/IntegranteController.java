@@ -8,18 +8,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.transaction.annotation.Transactional;
+
 @RestController
 @RequestMapping("/integrantes")
 public class IntegranteController {
 
+
     @Autowired
     private IntegranteRepository repository;
 
-    // Método para cadastrar um novo integrante
+
     @Transactional
     @PostMapping
     public ResponseEntity<Integrante> cadastrar(@Valid @RequestBody Integrante integrante, UriComponentsBuilder builder) {
-        // Salva o integrante no banco de dados
         Integrante novoIntegrante = repository.save(integrante);
 
         // Cria a URI para o novo recurso criado
